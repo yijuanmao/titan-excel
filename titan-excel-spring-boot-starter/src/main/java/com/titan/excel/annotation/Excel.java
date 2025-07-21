@@ -1,9 +1,13 @@
 package com.titan.excel.annotation;
 
-import com.titan.core.enums.ExcelColumnType;
-import com.titan.excel.adapter.ExcelHandlerAdapter;
+import com.titan.core.enums.IBaseEnum;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 自定义导出Excel数据注解
@@ -11,6 +15,8 @@ import org.apache.poi.ss.usermodel.IndexedColors;
  * @author zy
  * @date 2025-07-18 15:06
  **/
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Excel {
 
     /**
@@ -34,6 +40,11 @@ public @interface Excel {
     String readConverter() default "";
 
     /**
+     * 翻译枚举类
+     */
+    Class<?> converterEnum() default IBaseEnum.class;
+
+    /**
      * 导出时在excel中每个列的高度 单位为字符
      */
     double height() default 14;
@@ -47,11 +58,6 @@ public @interface Excel {
      * BigDecimal 精度 默认:-1(默认不开启BigDecimal格式化)
      */
     int scale() default -1;
-
-    /**
-     * 导出类型（0数字 1字符串,2图片）
-     */
-    ExcelColumnType cellType() default ExcelColumnType.STRING;
 
     /**
      * 导出列头背景色
@@ -77,16 +83,5 @@ public @interface Excel {
      * 导出字段对齐方式
      */
     HorizontalAlignment align() default HorizontalAlignment.CENTER;
-
-    /**
-     * 自定义数据处理器
-     */
-    Class<?> handler() default ExcelHandlerAdapter.class;
-
-    /**
-     * 翻译枚举类
-     */
-    Class<?> translateEnumClass() default Object.class;
-
 
 }
