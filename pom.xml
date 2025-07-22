@@ -23,16 +23,32 @@
         <lombok.version>1.18.38</lombok.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <spring.boot.version>2.7.8</spring.boot.version>
+        <spring.boot.version>2.7.7</spring.boot.version>
         <cn.hutool.version>5.8.39</cn.hutool.version>
         <cn.idev.excel.version>1.2.0</cn.idev.excel.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <commons-lang3.version>3.18.0</commons-lang3.version>
+        <fastjson.version>2.0.57</fastjson.version>
+        <com.fasterxml.jackson.core.version>2.19.2</com.fasterxml.jackson.core.version>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <optional>true</optional>
+                <scope>provided</scope>
+                <version>${spring.boot.version}</version>
+            </dependency>
 
             <!--lombok 插件-->
             <dependency>
@@ -62,18 +78,24 @@
                 <version>${titan-excel.vision}</version>
             </dependency>
 
-            <!-- commons-lang3 -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet-api.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!-- JSON 解析器和生成器 -->
+            <!--            <dependency>
+                            <groupId>com.alibaba.fastjson2</groupId>
+                            <artifactId>fastjson2</artifactId>
+                            <version>${fastjson.version}</version>
+                        </dependency>-->
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${com.fasterxml.jackson.core.version}</version>
             </dependency>
 
         </dependencies>

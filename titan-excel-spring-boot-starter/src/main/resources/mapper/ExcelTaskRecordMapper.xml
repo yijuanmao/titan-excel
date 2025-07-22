@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.titan.excel.mapper.ExcelTaskRecordMapper">
+
+    <resultMap type="com.titan.excel.entity.ExcelTaskRecord" id="ExcelTaskRecordResult">
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="exportType"    column="export_type"    />
+        <result property="exportStatus"    column="export_status"    />
+        <result property="exportStatus"    column="export_status"    />
+        <result property="sourceFile"    column="source_file"    />
+        <result property="estimateCount"    column="estimate_count"    />
+        <result property="totalCount"    column="total_count"    />
+        <result property="successCount"    column="success_count"    />
+        <result property="failCount"    column="fail_count"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="successFileUrl"    column="success_file_url"    />
+        <result property="failFileUrl"    column="fail_file_url"    />
+        <result property="failMsg"    column="fail_msg"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="businessCode"    column="business_code"    />
+    </resultMap>
+
+    <sql id="selectExcelTaskRecordVo">
+        SELECT id , create_by, update_by, create_time, update_time, export_type, export_status, source_file, estimate_count, total_count, success_count, fail_count, file_name, success_file_url , fail_file_url, fail_msg, start_time, end_time, business_code
+        FROM tt_excel_task_record
+    </sql>
+
+    <select id="selectExcelTaskRecordList" parameterType="com.titan.excel.entity.ExcelTaskRecord" resultMap="ExcelTaskRecordResult">
+        <include refid="selectExcelTaskRecordVo"/>
+        <where>
+            <if test="exportType != null "> and export_type = #{exportType}</if>
+            <if test="exportStatus != null "> and export_status = #{exportStatus}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="businessCode != null  and businessCode != ''"> and business_code = #{businessCode}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectTaskById" parameterType="Long" resultMap="ExcelTaskRecordResult">
+        <include refid="selectExcelTaskRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertExcelTaskRecord" parameterType="com.titan.excel.entity.ExcelTaskRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into tt_excel_task_record
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="exportType != null">export_type,</if>
+            <if test="exportStatus != null">export_status,</if>
+            <if test="sourceFile != null and sourceFile != ''">source_file,</if>
+            <if test="estimateCount != null">estimate_count,</if>
+            <if test="totalCount != null">total_count,</if>
+            <if test="successCount != null">success_count,</if>
+            <if test="failCount != null">fail_count,</if>
+            <if test="fileName != null and fileName != ''">file_name,</if>
+            <if test="successFileUrl != null and successFileUrl != ''">success_file_url,</if>
+            <if test="failFileUrl != null and failFileUrl != ''">fail_file_url,</if>
+            <if test="failMsg != null and failMsg != ''">fail_msg,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="businessCode != null">business_code,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="exportType != null">#{export_type},</if>
+            <if test="exportStatus != null">#{exportStatus},</if>
+            <if test="sourceFile != null and sourceFile != ''">#{sourceFile},</if>
+            <if test="estimateCount != null">#{estimate_count},</if>
+            <if test="totalCount != null">#{totalCount},</if>
+            <if test="successCount != null">#{successCount},</if>
+            <if test="failCount != null">#{failCount},</if>
+            <if test="fileName != null and fileName != ''">#{fileName},</if>
+            <if test="successFileUrl != null and successFileUrl != ''">#{successFileUrl},</if>
+            <if test="failFileUrl != null and failFileUrl != ''">#{failFileUrl},</if>
+            <if test="failMsg != null">#{failMsg},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="businessCode != null">#{businessCode},</if>
+        </trim>
+
+    </insert>
+
+    <update id="updateExcelTaskRecord" parameterType="com.titan.excel.entity.ExcelTaskRecord">
+        update tt_excel_task_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="exportType != null">#{export_type},</if>
+            <if test="exportStatus != null">#{exportStatus},</if>
+            <if test="sourceFile != null and sourceFile != ''">#{sourceFile},</if>
+            <if test="estimateCount != null">#{estimate_count},</if>
+            <if test="totalCount != null">#{totalCount},</if>
+            <if test="successCount != null">#{successCount},</if>
+            <if test="failCount != null">#{failCount},</if>
+            <if test="fileName != null and fileName != ''">#{fileName},</if>
+            <if test="successFileUrl != null and successFileUrl != ''">#{successFileUrl},</if>
+            <if test="failFileUrl != null and failFileUrl != ''">#{failFileUrl},</if>
+            <if test="failMsg != null">#{failMsg},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="businessCode != null">#{businessCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTaskById" parameterType="Long">
+        delete from tt_excel_task_record where id = #{id}
+    </delete>
+
+    <delete id="deleteTaskByIds">
+        delete from tt_excel_task_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
